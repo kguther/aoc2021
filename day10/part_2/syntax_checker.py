@@ -1,6 +1,6 @@
 class SyntaxChecker:
     MARKERS = {")": "(", "]": "[", "}": "{", ">": "<"}
-    SCORE = {")": 3, "]": 57, "}": 1197, ">": 25137}
+    SCORE = {"(": 1, "[": 2, "{": 3, "<": 4}
 
     def get_line_score(self, line):
         stack = []
@@ -9,16 +9,13 @@ class SyntaxChecker:
                 stack.append(char)
             elif char in self.MARKERS.keys():
                 if len(stack) == 0 or stack[-1] != self.MARKERS[char]:
-                    return self.SCORE[char]
+                    return 0
                 else:
                     stack.pop()
-        return 0
+        return self._get_stack_score(stack)
 
-def get_score_of_file(filename):
-    checker = SyntaxChecker()
-    with open(filename, "r") as sc:
+    def _get_stack_score(self, stack):
         score = 0
-        for line in sc:
-            score += checker.get_line_score(line)
-
-    return score
+        for char in stack[::-1]:
+            score = 5*score + self.SCORE[char]
+        return score

@@ -1,8 +1,9 @@
-from syntax_checker import get_score_of_file
+from file_scorer import FileScorer
 
 
 def main():
-    score = get_score_of_file("input")
+    scorer = FileScorer()
+    score = scorer.score_file("input")
     print(f"Total error score is {score}")
 
 if __name__ == "__main__":
