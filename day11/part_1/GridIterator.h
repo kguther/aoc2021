@@ -20,6 +20,13 @@ private:
 	void flash_step();
 	void decharge_step();
 	OctoGrid &grid;
+
+	template <typename D>
+	void iterate_grid(D &op){
+		for(auto x: grid.points()){
+			op(x);
+		}
+	}
 };
 
 #endif /* PART_1_GRIDITERATOR_H_ */

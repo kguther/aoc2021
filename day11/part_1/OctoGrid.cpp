@@ -6,6 +6,7 @@
  */
 
 #include <fstream>
+#include <numeric>
 #include <cstdlib>
 #include "OctoGrid.h"
 
@@ -18,6 +19,17 @@ std::vector<int> line_as_ints(std::string const &string){
 	return row;
 }
 
+OctoGrid grid_from_file(std::string filename){
+	std::ifstream inputfile(filename);
+	std::string line;
+	Array map;
+	while(inputfile >> line){
+		map.push_back(line_as_ints(line));
+	}
+	return OctoGrid(map);
+}
+
+
 std::vector<Point> OctoGrid::points() const{
 	std::vector<Point> points_of_map(0);
 	for(int x=0; x < size_x(); ++x){
@@ -28,15 +40,6 @@ std::vector<Point> OctoGrid::points() const{
 	return points_of_map;
 }
 
-OctoGrid grid_from_file(std::string filename){
-	std::ifstream inputfile(filename);
-	std::string line;
-	Array map;
-	while(inputfile >> line){
-		map.push_back(line_as_ints(line));
-	}
-	return OctoGrid(map);
-}
 
 void OctoGrid::flash(const Point &x) {
 	++flash_count;
@@ -51,4 +54,12 @@ void OctoGrid::flash(const Point &x) {
 bool OctoGrid::on_grid(const Point &x) const {
 	return (0 <= x.x() && x.x() < size_x())
 			&& (0 <= x.y() && x.y() < size_y());
+}
+
+int OctoGrid::total_power_levevl() const {
+	int power = 0;
+	for(auto line: grid){
+		power += std::accumulate(line.begin(), line.end(), 0);
+	}
+	return power;
 }

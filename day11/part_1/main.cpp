@@ -13,10 +13,19 @@
 int main(int argc, char *argv[]){
 	auto grid = grid_from_file("input");
 	GridIterator iterator(grid);
-	for(int i= 0; i < 100; ++i){
+	int i = 0;
+	while(true){
+		++i;
 		iterator.iteration();
+		if(i==100){
+			std::cout << "Total number of flashes after 100 iterations " << grid.n_flashes() << std::endl;
+		}
+		if(grid.total_power_levevl() == 0){
+			break;
+		}
 	}
-	std::cout << "Total number of flashes " << grid.n_flashes() << std::endl;
+	std::cout << "Full flash after " << i << " iterations" << std::endl;
+
 }
 
 

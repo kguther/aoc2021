@@ -29,7 +29,7 @@ public:
 	std::size_t size_y() const {return grid[0].size();}
 	int n_flashes() const {return flash_count;}
 	std::vector<Point> points() const;
-
+	int total_power_levevl() const;
 private:
 	Array grid;
 	int flash_count;
