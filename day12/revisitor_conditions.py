@@ -6,7 +6,7 @@ def revisitor_condition_part_1(connection, path):
 
 
 def revisitor_condition_part_2(connection, path):
-    return connection.large_target() or connection.target not in path.caves or _small_revisit_allowed(connection, path)
+    return revisitor_condition_part_1(connection, path) or _small_revisit_allowed(connection, path)
 
 
 def _small_revisit_allowed(connection, path):
