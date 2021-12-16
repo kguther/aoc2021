@@ -20,7 +20,7 @@ def main():
         polymer = builder.iterate(polymer)
 
     analyzer = Analyzer()
-    print(f"Occurence diff is now {analyzer.occurence_diff(polymer)}")
+    print(f"Occurence diff is now {analyzer.occurrence_diff(polymer)}")
 
 if __name__ == "__main__":
     main()

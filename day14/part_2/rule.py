@@ -1,31 +1,25 @@
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import Dict, List
-
-
-@dataclass(frozen=True)
-class Target:
-    required: str
-    add: str
+from typing import List, Dict
 
 
 @dataclass(frozen=True)
 class RuleSet:
-    rules: Dict[str, List[Target]]
+    _rules: Dict[str, List[str]]
 
-    def get_targets(self, element):
-        return self.rules.get(element, [])
+    def get_rule(self, pair):
+        return self._rules.get(pair, [])
 
     @classmethod
     def from_rule_list(cls, rule_list):
         rules = defaultdict(list)
         for line in rule_list:
             parts = line.split("->")
-            element = parts[0][0]
-            required = parts[0][1]
+            pair = parts[0].rstrip()
             added = parts[1].lstrip()
-            rules[element].append(Target(
-                required=required,
-                add=added
-            ))
+            new_pairs = [
+                pair[0]+added,
+                added+pair[1]
+            ]
+            rules[pair] = new_pairs
         return RuleSet(rules)
